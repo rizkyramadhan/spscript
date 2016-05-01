@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Spscript by DroopyTersen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Spscript</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/DroopyTersen/spscript" class="btn">View on GitHub</a>
+      <a href="https://github.com/DroopyTersen/spscript/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/DroopyTersen/spscript/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="spscript" class="anchor" href="#spscript" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SPScript</h1>
+
+<hr>
+
+<p>SPScript is a collection of javascript helpers for the SharePoint 2013 Rest API.  Some features include...</p>
+
+<ul>
+<li>Easy querying of list data with helpers for making either same-origin or cross-origin requests.</li>
+<li>Add and Update list items in 1 line of code.</li>
+<li>Easily utilize SharePoint search</li>
+<li>Integrated templating engine</li>
+<li>Chrome control helper to make your app look more like the host SharePoint site.</li>
+</ul>
+
+<h2>
+<a id="including-spscript-in-your-project" class="anchor" href="#including-spscript-in-your-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Including SPScript in your project</h2>
+
+<p>Option 1: NPM Module</p>
+
+<pre><code>&gt;&gt; npm install spscript
+
+</code></pre>
+
+<p>Option 2: Traditional Include</p>
+
+<ul>
+<li>
+<strong>Dev</strong> - Add the following script tag to your page
+
+<ul>
+<li><code>&lt;script type="text/javascript" src='https://cdn.rawgit.com/DroopyTersen/spscript/dist/v2/spscript.js'&gt;&lt;/script&gt;</code></li>
+</ul>
+</li>
+<li>
+<strong>Prod</strong> - Save the following file into your project
+
+<ul>
+<li>     <a href="https://raw.githubusercontent.com/DroopyTersen/spscript/dist/v2/spscript.js">https://raw.githubusercontent.com/DroopyTersen/spscript/dist/v2/spscript.js</a>
+</li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="initialization" class="anchor" href="#initialization" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Initialization</h2>
+
+<p>All you need is the url of the SharePoint site you are targeting.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> siteUrl <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>http://urltomysharepointsite.com<span class="pl-pds">"</span></span>;
+<span class="pl-k">var</span> dao <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">SPScript.RestDao</span>(siteUrl);</pre></div>
+
+<h2>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods</h2>
+
+<h4>
+<a id="web" class="anchor" href="#web" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Web</h4>
+
+<ul>
+<li>
+<code>web.info()</code> - Gets you the <a href="https://msdn.microsoft.com/en-us/library/office/jj245288.aspx#properties">SPWeb properties</a> of your site</li>
+<li>
+<code>web.subsites()</code> - Gets you all the sub sites and their <a href="https://msdn.microsoft.com/en-us/library/office/jj245288.aspx#properties">SPWeb properties</a>
+</li>
+<li>
+<code>web.permissions()</code> - Gets you an an array of permissions that have been setup for that site. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
+<li>
+<code>web.permissions(email)</code> - Looks up a user by their email address, then gets you a list of permissions that user has for your site.  Similiar to "Check Permissions". </li>
+</ul>
+
+<h4>
+<a id="lists" class="anchor" href="#lists" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Lists</h4>
+
+<ul>
+<li>
+<code>lists()</code> - gets you all the lists and libraries on your site and their <a href="https://msdn.microsoft.com/en-us/library/office/jj245826.aspx#properties">SPList properties</a>
+</li>
+<li>
+<code>lists(listname)</code> - gets you a list object for a specific list.  See the '<strong>List</strong>' methods for what you can do with this object</li>
+</ul>
+
+<h4>
+<a id="list" class="anchor" href="#list" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List</h4>
+
+<ul>
+<li>
+<code>list.info()</code> - gets you that list's <a href="https://msdn.microsoft.com/en-us/library/office/jj245826.aspx#properties">SPList properties</a>
+</li>
+<li>
+<code>list.getItems()</code> - gets you all the items in that list</li>
+<li>
+<code>list.getItems(odata)</code> - gets all the items in that list based on the <a href="http://www.odata.org/documentation/odata-version-2-0/uri-conventions/">OData</a> you pass in.  This allows you to trim selection, filter, sort etc..</li>
+<li>
+<code>list.getItemById(id)</code> - gets you a specific item based on the SharePoint Id</li>
+<li>
+<code>list.findItems(key, value)</code> - gets you all items whose field(key) matches the value. Currently only text and number columns are supported.</li>
+<li>
+<code>list.findItems(key, value, extraOdata)</code> - gets you all items whose field(key) matches the value. Currently only text and number columns are supported.</li>
+<li>
+<code>list.findItem(key, value)</code> - get you an item whose field(key) matches the value. If multiple matches are found, the first is returned.  Currently only text and number columns are supported.</li>
+<li>
+<code>list.addItem(item)</code> - takes a javascript object and creates a list item.</li>
+<li>
+<code>list.updateItem(id, updates)</code> - takes a SharePoint Id, and updates that item ONLY with properties that are found in the passed in <code>updates</code> object.</li>
+<li>
+<code>list.deleteItem(id)</code> - deletes the item with the specified SharePoint Id</li>
+<li>
+<code>list.permissions()</code> - Gets you an an array of permissions that have been setup for that list. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
+<li>
+<code>list.permissions(email)</code> - Looks up a user by their email address, then gets the permissions that user has for that list.  Similiar to "Check Permissions". </li>
+</ul>
+
+<h4>
+<a id="search" class="anchor" href="#search" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Search</h4>
+
+<ul>
+<li>
+<code>search.query(queryText)</code> - performs a SharePoint search and returns a <code>SearchResults</code>  object which contains elapsedTime, suggestion, resultsCount, totalResults, totalResultsIncludingDuplicates, items. The <code>items</code> property is what contains the actual "results" array.</li>
+<li>
+<code>search.query(queryText, queryOptions)</code> - same as <code>query(queryText)</code> but with the ability to override default search options.</li>
+<li>
+<code>search.people(queryText)</code> limits the search to just people</li>
+</ul>
+
+<h4>
+<a id="profiles" class="anchor" href="#profiles" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Profiles</h4>
+
+<ul>
+<li>
+<code>profiles.current()</code> - gets you all the profile properties for the current user</li>
+<li>
+<code>profiles.getByEmail(email)</code> - looks up a user based on their email and returns their profile properties</li>
+<li>
+<code>profiles.setProperty(user, key, value)</code> - sets a profile property (key) for the specified user.  User object should have <code>AccountName</code> or <code>LoginName</code> property</li>
+<li>
+<code>profiles.setProperty(email, key, value)</code> - sets a profile property (key) for the user tied to that email address</li>
+</ul>
+
+<h4>
+<a id="utils" class="anchor" href="#utils" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Utils</h4>
+
+<ul>
+<li>
+<code>utils.waitForLibrary(namespace)</code> - waits for the library to be on the page</li>
+<li>
+<code>utils.waitForLibraries(namespaces)</code> - waits for all libraries to be on the page</li>
+<li>
+<code>utils.getScript(url)</code> - loads a javascript file onto the page</li>
+<li>
+<code>utils.getScripts(urls)</code> - loads multiple javascript files onto the page</li>
+</ul>
+
+<h4>
+<a id="query-string-helpers" class="anchor" href="#query-string-helpers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Query String Helpers</h4>
+
+<ul>
+<li>
+<code>queryString.toObj(str)</code> - returns a javascript object. Each query string key is a property on the object.</li>
+<li>
+<code>queryString.fromObj(str)</code> - turns a javascript object into a string in format of "key1=value1&amp;key2=value2"</li>
+</ul>
+
+<h4>
+<a id="templating" class="anchor" href="#templating" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Templating</h4>
+
+<ul>
+<li>
+<code>templating.renderTemplate(template, item)</code> - returns an html string. <code>template</code> is an html string with <code>{{property}}</code> placeholders. <code>item</code> is a javascript object whose properties will be used to fill in your html placeholders.</li>
+</ul>
+
+<hr>
+
+<h2>
+<a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage Examples</h2>
+
+<h4>
+<a id="query-list-items" class="anchor" href="#query-list-items" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Query List Items</h4>
+
+<p>Get all <strong>"Tasks"</strong> with a status of <strong>"Approved"</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> taskList <span class="pl-k">=</span> <span class="pl-smi">dao</span>.<span class="pl-en">lists</span>(<span class="pl-s"><span class="pl-pds">"</span>Tasks<span class="pl-pds">"</span></span>)
+
+<span class="pl-c">// BEST: Option 1 - 'Find' syntax sugar</span>
+<span class="pl-smi">taskList</span>.<span class="pl-en">findItems</span>(<span class="pl-s"><span class="pl-pds">"</span>Status<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Approved<span class="pl-pds">"</span></span>).<span class="pl-en">then</span>(logApprovedTasks);
+
+<span class="pl-c">// BETTER: Option 2 - OData support in the '.items()'</span>
+<span class="pl-smi">taskList</span>.<span class="pl-en">getItems</span>(<span class="pl-s"><span class="pl-pds">"</span>$filter=Status eq 'Approved'<span class="pl-pds">"</span></span>).<span class="pl-en">then</span>(logApprovedTasks);
+
+<span class="pl-c">// GOOD: Options 3 - Manual 'GET'</span>
+<span class="pl-smi">dao</span>.<span class="pl-en">get</span>(<span class="pl-s"><span class="pl-pds">"</span>/web/lists/getByTitle('Tasks')?$filter=Status eq 'Approved'<span class="pl-pds">"</span></span>).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">data</span>){
+    <span class="pl-k">if</span> (data <span class="pl-k">&amp;&amp;</span> <span class="pl-smi">data</span>.<span class="pl-smi">d</span> <span class="pl-k">&amp;&amp;</span> <span class="pl-smi">data</span>.<span class="pl-smi">d</span>.<span class="pl-smi">results</span>) {
+        <span class="pl-en">logApprovedTasks</span>(<span class="pl-smi">data</span>.<span class="pl-smi">d</span>.<span class="pl-smi">results</span>);    
+    }
+});
+
+<span class="pl-k">var</span> <span class="pl-en">logApprovedTasks</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">tasks</span>) {
+    <span class="pl-smi">tasks</span>.<span class="pl-en">forEach</span>(<span class="pl-k">function</span>(<span class="pl-smi">task</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">task</span>.<span class="pl-smi">Title</span>);
+    });
+};</pre></div>
+
+<h4>
+<a id="get-item-by-id" class="anchor" href="#get-item-by-id" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get Item By Id</h4>
+
+<p>Get the task with a SharePoint ID of 29</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">dao</span>.<span class="pl-en">lists</span>(<span class="pl-s"><span class="pl-pds">"</span>Tasks<span class="pl-pds">"</span></span>).<span class="pl-en">getItemById</span>(<span class="pl-c1">29</span>).<span class="pl-en">then</span>(displayTask);
+<span class="pl-k">var</span> <span class="pl-en">displayTask</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">task</span>) {
+    <span class="pl-c">//blah blah blah</span>
+}
+</pre></div>
+
+<h4>
+<a id="add-list-item" class="anchor" href="#add-list-item" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add List Item</h4>
+
+<p>Add item to the <strong>"Tasks"</strong> list</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> newItem <span class="pl-k">=</span> { 
+    Title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>My New Task<span class="pl-pds">"</span></span>, 
+    Status<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Not Started<span class="pl-pds">"</span></span>, 
+    RemainingHours<span class="pl-k">:</span> <span class="pl-c1">12</span> 
+};
+<span class="pl-smi">dao</span>.<span class="pl-en">lists</span>(<span class="pl-s"><span class="pl-pds">"</span>Tasks<span class="pl-pds">"</span></span>).<span class="pl-en">addItem</span>(newItem);
+</pre></div>
+
+<h4>
+<a id="update-list-item" class="anchor" href="#update-list-item" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Update List Item</h4>
+
+<p>Update item in the <strong>"Tasks"</strong> list.  Set item 29's status to <strong>"Completed"</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> updates <span class="pl-k">=</span> { Status<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Completed<span class="pl-pds">"</span></span>, RemainingHours<span class="pl-k">:</span> <span class="pl-c1">0</span> };
+<span class="pl-smi">dao</span>.<span class="pl-en">lists</span>(<span class="pl-s"><span class="pl-pds">"</span>Tasks<span class="pl-pds">"</span></span>).<span class="pl-en">updateItem</span>(<span class="pl-c1">29</span>, updates);
+</pre></div>
+
+<h4>
+<a id="find-one" class="anchor" href="#find-one" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Find One</h4>
+
+<p>Get the one item whose <strong>"RequestId"</strong> is <strong>"abc123"</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">dao</span>.<span class="pl-en">lists</span>(<span class="pl-s"><span class="pl-pds">"</span>IT Requests<span class="pl-pds">"</span></span>)
+    .<span class="pl-en">findItem</span>(<span class="pl-s"><span class="pl-pds">"</span>RequestId<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>abc123<span class="pl-pds">"</span></span>)
+    .<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">request</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">request</span>.<span class="pl-smi">RequestId</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">request</span>.<span class="pl-smi">Title</span>);
+    });
+</pre></div>
+
+<p>If there is more than one match, it will return the first result.  If there are zero matches, it will return <code>null</code></p>
+
+<h4>
+<a id="get-every-list-item" class="anchor" href="#get-every-list-item" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Get Every List Item</h4>
+
+<p>Get all items in the <strong>"Tasks"</strong> list and log the 'Title'</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">dao</span>.<span class="pl-en">lists</span>(<span class="pl-s"><span class="pl-pds">"</span>Tasks<span class="pl-pds">"</span></span>)
+    .<span class="pl-en">getItems</span>()
+    .<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">tasks</span>){
+        <span class="pl-smi">tasks</span>.<span class="pl-en">forEach</span>(<span class="pl-k">function</span>(<span class="pl-smi">task</span>){
+            <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">task</span>.<span class="pl-smi">Title</span>);
+        });
+    });
+</pre></div>
+
+<h4>
+<a id="get--post-requests" class="anchor" href="#get--post-requests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GET &amp; POST Requests</h4>
+
+<p>Every REST Api call that SharePoint supports can be called using SPService. Both the RestDao and CrossDomainDao implement a <code>.get()</code> and <code>post()</code> method that allow you to type in the api call's relative url.  For example, you could rewrite the code above as:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">dao</span>.<span class="pl-en">get</span>(<span class="pl-s"><span class="pl-pds">"</span>/web/lists/getByTitle('Tasks')/items<span class="pl-pds">"</span></span>).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">data</span>){
+    <span class="pl-k">var</span> tasks <span class="pl-k">=</span> <span class="pl-smi">data</span>.<span class="pl-smi">d</span>.<span class="pl-smi">results</span>;
+    <span class="pl-smi">tasks</span>.<span class="pl-en">forEach</span>(<span class="pl-k">function</span>(<span class="pl-smi">task</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">task</span>.<span class="pl-smi">Title</span>);
+    });
+});</pre></div>
+
+<h4>
+<a id="profiles-1" class="anchor" href="#profiles-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Profiles</h4>
+
+<p>Get the current user's profile properties</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">dao</span>.<span class="pl-smi">profiles</span>.<span class="pl-c1">current</span>().<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">profile</span>){
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-c1">JSON</span>.<span class="pl-en">stringify</span>(profile));
+});</pre></div>
+
+<h4>
+<a id="search-1" class="anchor" href="#search-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Search</h4>
+
+<p>Search for <strong>"petersen"</strong> and get the url of each search result</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">dao</span>.<span class="pl-smi">search</span>.<span class="pl-en">query</span>(<span class="pl-s"><span class="pl-pds">'</span>petersen<span class="pl-pds">'</span></span>).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">searchResults</span>){
+    <span class="pl-smi">searchResults</span>.<span class="pl-smi">items</span>.<span class="pl-en">forEach</span>(<span class="pl-k">function</span>(<span class="pl-smi">item</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-smi">item</span>.<span class="pl-smi">FileRef</span>);
+    });
+});</pre></div>
+
+<p>Search for People named <strong>"petersen"</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">dao</span>.<span class="pl-smi">search</span>.<span class="pl-en">people</span>(<span class="pl-s"><span class="pl-pds">'</span>petersen<span class="pl-pds">'</span></span>).<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">searchResults</span>){
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>There are <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">searchResults</span>.<span class="pl-smi">totalResults</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> people named 'andrew'<span class="pl-pds">"</span></span>);
+});</pre></div>
+
+<h4>
+<a id="templating-1" class="anchor" href="#templating-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Templating</h4>
+
+<p>SPScript contains a lightweigt templating engine.  This allows you start with html with `<code>{{property}}</code> placeholders and then fill in the values and display on the page after you have finished getting all your REST data.</p>
+
+<p>Display document name and category on the page</p>
+
+<p>Step 1: Create the html container</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">'</span>docs-webpart<span class="pl-pds">'</span></span>&gt;<span class="pl-c">&lt;!-- Template html will be injected here --&gt;</span>&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<p>Step 2: Create a template using a script tag with a custom type</p>
+
+<div class="highlight highlight-text-html-basic"><pre><span class="pl-s1">&lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">'</span>custom/template<span class="pl-pds">'</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">'</span>doc-template<span class="pl-pds">'</span></span>&gt;</span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span>div <span class="pl-k">class</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>document<span class="pl-pds">'</span></span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">        <span class="pl-k">&lt;</span>a href<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>{{FileRef}}<span class="pl-pds">'</span></span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1">            <span class="pl-k">&lt;</span>h3<span class="pl-k">&gt;</span>{{FileRef}}<span class="pl-k">&lt;</span><span class="pl-k">/</span>h3<span class="pl-k">&gt;</span></span>
+<span class="pl-s1">            <span class="pl-k">&lt;</span>h4<span class="pl-k">&gt;</span>{{Category}}<span class="pl-k">&lt;</span><span class="pl-k">/</span>h4<span class="pl-k">&gt;</span></span>
+<span class="pl-s1">        <span class="pl-k">&lt;</span><span class="pl-k">/</span>a<span class="pl-k">&gt;</span></span>
+<span class="pl-s1">    <span class="pl-k">&lt;</span><span class="pl-k">/</span>div<span class="pl-k">&gt;</span></span>
+<span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre></div>
+
+<p>Step 3: Use the RestDao to get the documents, and the templating to render them on the page.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">//select our template</span>
+<span class="pl-k">var</span> template <span class="pl-k">=</span> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>#doc-template<span class="pl-pds">"</span></span>).<span class="pl-en">html</span>();
+
+<span class="pl-c">//Get our documents</span>
+<span class="pl-smi">dao</span>.<span class="pl-en">lists</span>(<span class="pl-s"><span class="pl-pds">"</span>Documents<span class="pl-pds">"</span></span>).<span class="pl-en">getItems</span>().<span class="pl-en">then</span>(<span class="pl-k">function</span>(<span class="pl-smi">docs</span>){
+    <span class="pl-k">var</span> html <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span>;
+
+    <span class="pl-c">//foreach document, create the html based on our template</span>
+
+    <span class="pl-smi">docs</span>.<span class="pl-en">forEach</span>(<span class="pl-k">function</span>(<span class="pl-smi">doc</span>){
+        html <span class="pl-k">+=</span> <span class="pl-smi">SPScript</span>.<span class="pl-smi">templating</span>.<span class="pl-en">renderTemplate</span>(template, doc);
+    });
+
+    <span class="pl-c">//Output all the html to the page inside of our container</span>
+    <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>#docs-webpart<span class="pl-pds">"</span></span>).<span class="pl-en">html</span>(html);
+});</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/DroopyTersen/spscript">Spscript</a> is maintained by <a href="https://github.com/DroopyTersen">DroopyTersen</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
