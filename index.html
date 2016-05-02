@@ -37,24 +37,17 @@
 <h2>
 <a id="including-spscript-in-your-project" class="anchor" href="#including-spscript-in-your-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Including SPScript in your project</h2>
 
-<p>Option 1: NPM Module</p>
 
+<p>Option 1: Traditional Include</p>
+<p>
+<ol>
+  <li>Click the "Get the Code" button at the top of this page</li>
+  <li>Download the file</li>
+  <li>Reference that javascript file on your page</li>
+</ol>
+</p>
+<p>Option 2: NPM Module</p>
 <pre><code>&gt;&gt; npm install spscript</code></pre>
-
-<p>Option 2: Traditional Include</p>
-
-<strong>Dev</strong> - Add the following script tag to your page
-
-<br/>
-<code>
-&lt;script type="text/javascript" src='https://cdn.rawgit.com/DroopyTersen/spscript/master/dist/v2/spscript.js'&gt;&lt;/script&gt;
-</code>
-
-<br/>
-<br/>
-<strong>Prod</strong> - Save the following file into your project
-
-<a href="https://raw.githubusercontent.com/DroopyTersen/spscript/master/dist/v2/spscript.js">https://raw.githubusercontent.com/DroopyTersen/spscript/master/dist/v2/spscript.js</a>
 
 <h2>
 <a id="initialization" class="anchor" href="#initialization" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Initialization</h2>
@@ -72,14 +65,14 @@
 
 <ul>
 <li>
-<code>web.info()</code> - Gets you the <a href="https://msdn.microsoft.com/en-us/library/office/jj245288.aspx#properties">SPWeb properties</a> of your site</li>
+<a href='docs/Web.html#info'><code>web.info()</code></a> - Gets you the <a href="https://msdn.microsoft.com/en-us/library/office/jj245288.aspx#properties">SPWeb properties</a> of your site</li>
 <li>
-<code>web.subsites()</code> - Gets you all the sub sites and their <a href="https://msdn.microsoft.com/en-us/library/office/jj245288.aspx#properties">SPWeb properties</a>
+<a href='docs/Web.html#subsites'><code>web.subsites()</a></code> - Gets you all the sub sites and their <a href="https://msdn.microsoft.com/en-us/library/office/jj245288.aspx#properties">SPWeb properties</a>
 </li>
 <li>
-<code>web.permissions.getRoleAssignments()</code> - Gets you an an array of permissions that have been setup for that site. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
+<a href='docs/Permissions.html#getRoleAssignments'><code>web.permissions.getRoleAssignments()</code></a> - Gets you an an array of permissions that have been setup for that site. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
 <li>
-<code>web.permissions.check([email])</code> - Looks up a user by their email address (current user if no email is passed), then gets you a list of permissions that user has for your site.  Similiar to "Check Permissions". </li>
+<a href='docs/Permissions.html#check'><code>web.permissions.check([email])</code></a> - Looks up a user by their email address (current user if no email is passed), then gets you a list of permissions that user has for your site.  Similiar to "Check Permissions". </li>
 </ul>
 
 <h4>
@@ -87,10 +80,10 @@
 
 <ul>
 <li>
-<code>lists()</code> - gets you all the lists and libraries on your site and their <a href="https://msdn.microsoft.com/en-us/library/office/jj245826.aspx#properties">SPList properties</a>
+<a href='docs/RestDao.html#lists'><code>lists()</code></a> - gets you all the lists and libraries on your site and their <a href="https://msdn.microsoft.com/en-us/library/office/jj245826.aspx#properties">SPList properties</a>
 </li>
 <li>
-<code>lists(listname)</code> - gets you a list object for a specific list.  See the '<strong>List</strong>' methods for what you can do with this object</li>
+<a href='docs/RestDao.html#lists'><code>lists(listname)</code></a> - gets you a list object for a specific list.  See the '<strong>List</strong>' methods for what you can do with this object</li>
 </ul>
 
 <h4>
@@ -98,30 +91,30 @@
 
 <ul>
 <li>
-<code>list.info()</code> - gets you that list's <a href="https://msdn.microsoft.com/en-us/library/office/jj245826.aspx#properties">SPList properties</a>
+<a href='docs/List.html#info'><code>list.info()</code></a> - gets you that list's <a href="https://msdn.microsoft.com/en-us/library/office/jj245826.aspx#properties">SPList properties</a>
 </li>
 <li>
-<code>list.getItems()</code> - gets you all the items in that list</li>
+<a href='docs/List.html#getItems'><code>list.getItems()</code></a> - gets you all the items in that list</li>
 <li>
-<code>list.getItems(odata)</code> - gets all the items in that list based on the <a href="http://www.odata.org/documentation/odata-version-2-0/uri-conventions/">OData</a> you pass in.  This allows you to trim selection, filter, sort etc..</li>
+<a href='docs/List.html#getItems'><code>list.getItems(odata)</code></a> - gets all the items in that list based on the <a href="http://www.odata.org/documentation/odata-version-2-0/uri-conventions/">OData</a> you pass in.  This allows you to trim selection, filter, sort etc..</li>
 <li>
-<code>list.getItemById(id)</code> - gets you a specific item based on the SharePoint Id</li>
+<a href='docs/List.html#getItemById'><code>list.getItemById(id)</code></a> - gets you a specific item based on the SharePoint Id</li>
 <li>
-<code>list.findItems(key, value)</code> - gets you all items whose field(key) matches the value. Currently only text and number columns are supported.</li>
+<a href='docs/List.html#findItems'><code>list.findItems(key, value)</code></a> - gets you all items whose field(key) matches the value. Currently only text and number columns are supported.</li>
 <li>
-<code>list.findItems(key, value, extraOdata)</code> - gets you all items whose field(key) matches the value. Currently only text and number columns are supported.</li>
+<a href='docs/List.html#findItems'><code>list.findItems(key, value, extraOdata)</code></a> - gets you all items whose field(key) matches the value. Currently only text and number columns are supported.</li>
 <li>
-<code>list.findItem(key, value)</code> - get you an item whose field(key) matches the value. If multiple matches are found, the first is returned.  Currently only text and number columns are supported.</li>
+<a href='docs/List.html#findItem'><code>list.findItem(key, value)</code></a> - get you an item whose field(key) matches the value. If multiple matches are found, the first is returned.  Currently only text and number columns are supported.</li>
 <li>
-<code>list.addItem(item)</code> - takes a javascript object and creates a list item.</li>
+<a href='docs/List.html#addItem'><code>list.addItem(item)</code></a> - takes a javascript object and creates a list item.</li>
 <li>
-<code>list.updateItem(id, updates)</code> - takes a SharePoint Id, and updates that item ONLY with properties that are found in the passed in <code>updates</code> object.</li>
+<a href='docs/List.html#updateItem'><code>list.updateItem(id, updates)</code></a> - takes a SharePoint Id, and updates that item ONLY with properties that are found in the passed in <code>updates</code> object.</li>
 <li>
-<code>list.deleteItem(id)</code> - deletes the item with the specified SharePoint Id</li>
+<a href='docs/List.html#deleteItem'><code>list.deleteItem(id)</code></a> - deletes the item with the specified SharePoint Id</li>
 <li>
-<code>list.permissions.getRoleAssignments()</code> - Gets you an an array of permissions that have been setup for that list. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
+<a href='docs/Permissions.html#getRoleAssignments'><code>list.permissions.getRoleAssignments()</code></a> - Gets you an an array of permissions that have been setup for that list. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
 <li>
-<code>list.permissions.check([email])</code> - Looks up a user by their email address (current user if no email is passed), then gets the permissions that user has for that list.  Similiar to "Check Permissions". </li>
+<a href='docs/Permissions.html#check'><code>list.permissions.check([email])</code></a> - Looks up a user by their email address (current user if no email is passed), then gets the permissions that user has for that list.  Similiar to "Check Permissions". </li>
 </ul>
 
 <h4>
@@ -129,11 +122,11 @@
 
 <ul>
 <li>
-<code>search.query(queryText)</code> - performs a SharePoint search and returns a <code>SearchResults</code>  object which contains elapsedTime, suggestion, resultsCount, totalResults, totalResultsIncludingDuplicates, items. The <code>items</code> property is what contains the actual "results" array.</li>
+<a href='docs/Search.html#query'><code>search.query(queryText)</code></a> - performs a SharePoint search and returns a <code>SearchResults</code>  object which contains elapsedTime, suggestion, resultsCount, totalResults, totalResultsIncludingDuplicates, items. The <code>items</code> property is what contains the actual "results" array.</li>
 <li>
-<code>search.query(queryText, queryOptions)</code> - same as <code>query(queryText)</code> but with the ability to override default search options.</li>
+<a href='docs/Search.html#query'><code>search.query(queryText, queryOptions)</code></a> - same as <code>query(queryText)</code> but with the ability to override default search options.</li>
 <li>
-<code>search.people(queryText)</code> limits the search to just people</li>
+<a href='docs/Search.html#people'><code>search.people(queryText)</code></a> limits the search to just people</li>
 </ul>
 
 <h4>
@@ -141,13 +134,13 @@
 
 <ul>
 <li>
-<code>profiles.current()</code> - gets you all the profile properties for the current user</li>
+<a href='docs/Profiles.html#current'><code>profiles.current()</code></a> - gets you all the profile properties for the current user</li>
 <li>
-<code>profiles.getByEmail(email)</code> - looks up a user based on their email and returns their profile properties</li>
+<a href='docs/Profiles.html#getByEmail'><code>profiles.getByEmail(email)</code></a> - looks up a user based on their email and returns their profile properties</li>
 <li>
-<code>profiles.setProperty(user, key, value)</code> - sets a profile property (key) for the specified user.  User object should have <code>AccountName</code> or <code>LoginName</code> property</li>
+<a href='docs/Profiles.html#setProperty'><code>profiles.setProperty(user, key, value)</code></a> - sets a profile property (key) for the specified user.  User object should have <code>AccountName</code> or <code>LoginName</code> property</li>
 <li>
-<code>profiles.setProperty(email, key, value)</code> - sets a profile property (key) for the user tied to that email address</li>
+<a href='docs/Profiles.html#setProperty'><code>profiles.setProperty(email, key, value)</code></a> - sets a profile property (key) for the user tied to that email address</li>
 </ul>
 
 <h4>
@@ -155,13 +148,13 @@
 
 <ul>
 <li>
-<code>utils.waitForLibrary(namespace)</code> - waits for the library to be on the page</li>
+<a href='docs/SPScript.utils.html#.waitForLibrary'><code>utils.waitForLibrary(namespace)</code></a> - waits for the library to be on the page</li>
 <li>
-<code>utils.waitForLibraries(namespaces)</code> - waits for all libraries to be on the page</li>
+<a href='docs/SPScript.utils.html#.waitForLibraries'><code>utils.waitForLibraries(namespaces)</code></a> - waits for all libraries to be on the page</li>
 <li>
-<code>utils.getScript(url)</code> - loads a javascript file onto the page</li>
+<a href='docs/SPScript.utils.html#.getScript'><code>utils.getScript(url)</code></a> - loads a javascript file onto the page</li>
 <li>
-<code>utils.getScripts(urls)</code> - loads multiple javascript files onto the page</li>
+<a href='docs/SPScript.utils.html#.getScripts'><code>utils.getScripts(urls)</code></a> - loads multiple javascript files onto the page</li>
 </ul>
 
 <h4>
@@ -169,9 +162,9 @@
 
 <ul>
 <li>
-<code>queryString.toObj(str)</code> - returns a javascript object. Each query string key is a property on the object.</li>
+<a href='docs/SPScript.queryString.html#.toObj'><code>queryString.toObj(str)</code></a> - returns a javascript object. Each query string key is a property on the object.</li>
 <li>
-<code>queryString.fromObj(str)</code> - turns a javascript object into a string in format of "key1=value1&amp;key2=value2"</li>
+<a href='docs/SPScript.queryString.html#.fromObj'><code>queryString.fromObj(str)</code></a> - turns a javascript object into a string in format of "key1=value1&amp;key2=value2"</li>
 </ul>
 
 <h4>
