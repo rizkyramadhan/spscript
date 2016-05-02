@@ -43,23 +43,18 @@
 
 <p>Option 2: Traditional Include</p>
 
-<ul>
-<li>
 <strong>Dev</strong> - Add the following script tag to your page
 
-<ul>
-<li><code>&lt;script type="text/javascript" src='https://cdn.rawgit.com/DroopyTersen/spscript/master/dist/v2/spscript.js'&gt;&lt;/script&gt;</code></li>
-</ul>
-</li>
-<li>
+<br/>
+<code>
+&lt;script type="text/javascript" src='https://cdn.rawgit.com/DroopyTersen/spscript/master/dist/v2/spscript.js'&gt;&lt;/script&gt;
+</code>
+
+<br/>
+<br/>
 <strong>Prod</strong> - Save the following file into your project
 
-<ul>
-<li>     <a href="https://raw.githubusercontent.com/DroopyTersen/spscript/master/dist/v2/spscript.js">https://raw.githubusercontent.com/DroopyTersen/spscript/master/dist/v2/spscript.js</a>
-</li>
-</ul>
-</li>
-</ul>
+<a href="https://raw.githubusercontent.com/DroopyTersen/spscript/master/dist/v2/spscript.js">https://raw.githubusercontent.com/DroopyTersen/spscript/master/dist/v2/spscript.js</a>
 
 <h2>
 <a id="initialization" class="anchor" href="#initialization" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Initialization</h2>
@@ -82,9 +77,9 @@
 <code>web.subsites()</code> - Gets you all the sub sites and their <a href="https://msdn.microsoft.com/en-us/library/office/jj245288.aspx#properties">SPWeb properties</a>
 </li>
 <li>
-<code>web.permissions()</code> - Gets you an an array of permissions that have been setup for that site. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
+<code>web.permissions.getRoleAssignments()</code> - Gets you an an array of permissions that have been setup for that site. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
 <li>
-<code>web.permissions(email)</code> - Looks up a user by their email address, then gets you a list of permissions that user has for your site.  Similiar to "Check Permissions". </li>
+<code>web.permissions.check([email])</code> - Looks up a user by their email address (current user if no email is passed), then gets you a list of permissions that user has for your site.  Similiar to "Check Permissions". </li>
 </ul>
 
 <h4>
@@ -124,9 +119,9 @@
 <li>
 <code>list.deleteItem(id)</code> - deletes the item with the specified SharePoint Id</li>
 <li>
-<code>list.permissions()</code> - Gets you an an array of permissions that have been setup for that list. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
+<code>list.permissions.getRoleAssignments()</code> - Gets you an an array of permissions that have been setup for that list. Each permission object has a <code>member</code> (the user or group) and a <code>roles</code> array (the permissions that user or group has). </li>
 <li>
-<code>list.permissions(email)</code> - Looks up a user by their email address, then gets the permissions that user has for that list.  Similiar to "Check Permissions". </li>
+<code>list.permissions.check([email])</code> - Looks up a user by their email address (current user if no email is passed), then gets the permissions that user has for that list.  Similiar to "Check Permissions". </li>
 </ul>
 
 <h4>
